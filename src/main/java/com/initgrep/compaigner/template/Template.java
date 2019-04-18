@@ -1,10 +1,17 @@
 package com.initgrep.compaigner.template;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.initgrep.compaigner.audit.Auditable;
+import com.initgrep.compaigner.compaign.Compaign;
+import com.initgrep.compaigner.owner.Owner;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,9 +37,19 @@ public class Template extends Auditable {
 	@NonNull
 	private String desription;
 	
+	@NonNull
+	private Boolean isPrivate;
+	
 	/**
 	 * TODO: change String to Clob 
 	 */
 	@NonNull
 	private String content;
+	
+	@ManyToOne
+	private Owner owner;
+	
+	
+	@OneToMany(mappedBy="template")
+	private List<Compaign> compaigns = new ArrayList<>();
 }

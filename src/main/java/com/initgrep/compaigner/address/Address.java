@@ -3,9 +3,10 @@ package com.initgrep.compaigner.address;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.initgrep.compaigner.audit.Auditable;
-import com.initgrep.compaigner.template.Template;
+import com.initgrep.compaigner.owner.Owner;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -40,5 +41,8 @@ public class Address extends Auditable{
 	
 	@NonNull
 	private String country;
+	
+	@ManyToOne
+	private Owner owner;
 
 }

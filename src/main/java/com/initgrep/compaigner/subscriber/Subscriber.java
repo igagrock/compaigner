@@ -3,9 +3,10 @@ package com.initgrep.compaigner.subscriber;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.initgrep.compaigner.audit.Auditable;
-import com.initgrep.compaigner.template.Template;
+import com.initgrep.compaigner.org.Organisation;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,5 +31,10 @@ public class Subscriber extends Auditable {
 	
 	@NonNull
 	private Integer locale;
+	
+	@ManyToOne
+	private Organisation org;
+	
+	
 
 }

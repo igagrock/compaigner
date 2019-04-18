@@ -3,8 +3,10 @@ package com.initgrep.compaigner.compaign;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.initgrep.compaigner.audit.Auditable;
+import com.initgrep.compaigner.owner.Owner;
 import com.initgrep.compaigner.template.Template;
 
 import lombok.EqualsAndHashCode;
@@ -37,8 +39,10 @@ public class Compaign extends Auditable{
 	@NonNull
 	private Boolean status;
 	
+	@ManyToOne
+	private Template template;
 	
-	
-	
+	@ManyToOne
+	private Owner owner;
 
 }

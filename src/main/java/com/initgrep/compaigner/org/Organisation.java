@@ -1,11 +1,17 @@
 package com.initgrep.compaigner.org;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.initgrep.compaigner.audit.Auditable;
-import com.initgrep.compaigner.template.Template;
+import com.initgrep.compaigner.owner.Owner;
+import com.initgrep.compaigner.subscriber.Subscriber;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,5 +36,11 @@ public class Organisation extends Auditable {
 	
 	@NonNull
 	private String url;
+	
+	@ManyToOne
+	private Owner owner;
+	
+	@OneToMany(mappedBy ="org")
+	private List<Subscriber> subscribers = new ArrayList<>();
 
 }

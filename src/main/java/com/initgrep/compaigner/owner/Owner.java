@@ -10,7 +10,6 @@ import javax.persistence.OneToMany;
 
 import com.initgrep.compaigner.address.Address;
 import com.initgrep.compaigner.audit.Auditable;
-import com.initgrep.compaigner.compaign.Compaign;
 import com.initgrep.compaigner.org.Organisation;
 import com.initgrep.compaigner.template.Template;
 
@@ -20,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Getter
@@ -28,6 +28,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @Entity
+@ToString(exclude = { "addresses", "orgs" , "templates"})
 public class Owner extends Auditable{
 
 
@@ -36,7 +37,7 @@ public class Owner extends Auditable{
 	private Long id;
 	
 	@NonNull
-	private Long name;
+	private String name;
 	
 	@NonNull
 	private String email;
@@ -58,7 +59,5 @@ public class Owner extends Auditable{
 	@OneToMany(mappedBy="owner")
 	private List<Template> templates = new ArrayList<>();
 
-	@OneToMany(mappedBy="owner")
-	private List<Compaign> compaigns = new ArrayList<>();
 
 }

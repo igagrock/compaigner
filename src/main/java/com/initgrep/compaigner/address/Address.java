@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -21,6 +22,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @Entity
+@ToString(exclude = {"owner"})
 public class Address extends Auditable{
 	
 	@Id @GeneratedValue
@@ -41,6 +43,9 @@ public class Address extends Auditable{
 	
 	@NonNull
 	private String country;
+	
+	@NonNull
+	private String ZipCode;
 	
 	@ManyToOne
 	private Owner owner;

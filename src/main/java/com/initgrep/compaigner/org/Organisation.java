@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.initgrep.compaigner.audit.Auditable;
+import com.initgrep.compaigner.compaign.Compaign;
 import com.initgrep.compaigner.owner.Owner;
 import com.initgrep.compaigner.subscriber.Subscriber;
 
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -26,6 +28,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @Entity
+@ToString(exclude = {"subscribers" , "compaigns"})
 public class Organisation extends Auditable {
 	
 	@Id @GeneratedValue
@@ -42,5 +45,9 @@ public class Organisation extends Auditable {
 	
 	@OneToMany(mappedBy ="org")
 	private List<Subscriber> subscribers = new ArrayList<>();
+	
+	@OneToMany(mappedBy ="org")
+	private List<Compaign> compaigns = new ArrayList<>();
+	
 
 }

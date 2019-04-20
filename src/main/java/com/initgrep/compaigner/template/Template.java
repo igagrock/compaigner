@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -26,6 +27,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @Entity
+@ToString(exclude = {"compaigns"})
 public class Template extends Auditable {
 
 	@Id @GeneratedValue
@@ -35,7 +37,7 @@ public class Template extends Auditable {
 	private String title;
 	
 	@NonNull
-	private String desription;
+	private String description;
 	
 	@NonNull
 	private Boolean isPrivate;

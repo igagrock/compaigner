@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -21,6 +22,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @Entity
+@ToString(exclude = { "org"})
 public class Subscriber extends Auditable {
 	
 	@Id @GeneratedValue
@@ -34,6 +36,7 @@ public class Subscriber extends Auditable {
 	
 	@ManyToOne
 	private Organisation org;
+	
 	
 	
 

@@ -32,7 +32,7 @@ public class DatabaseLoader implements CommandLineRunner {
 	@Transactional
 	public void run(String... args) throws Exception {
 
-		fetchOwnerInformation_test1();
+//		fetchOwnerInformation_test1();
 
 	}
 

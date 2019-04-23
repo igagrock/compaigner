@@ -1,6 +1,7 @@
 package com.initgrep.compaigner.subscriber;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -20,24 +21,22 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Entity
-@ToString(exclude = { "org"})
+@ToString(exclude = { "org" })
 public class Subscriber extends Auditable {
-	
-	@Id @GeneratedValue
+
+	@Id
+	@GeneratedValue
 	private Long id;
-	
+
 	@NonNull
 	private String email;
-	
+
 	@NonNull
 	private Integer locale;
-	
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Organisation org;
-	
-	
-	
 
 }

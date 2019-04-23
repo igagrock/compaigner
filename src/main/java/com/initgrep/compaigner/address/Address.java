@@ -1,6 +1,7 @@
 package com.initgrep.compaigner.address;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -47,7 +48,7 @@ public class Address extends Auditable{
 	@NonNull
 	private String ZipCode;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Owner owner;
-
+	
 }

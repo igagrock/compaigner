@@ -29,26 +29,41 @@ public class AddressServiceTest {
 	
 	@Test(expected = DataNotFoundException.class)
 	public void getAddressById_test() throws DataNotFoundException {
-		service.getAddress(1000L);
+		service.get(1000L);
 	}
 	
 	@Test
 	public void getAddressById_test1() throws DataNotFoundException {
 		thrown.expect(DataNotFoundException.class);
-		service.getAddress(1000L);
+		service.get(1000L);
 	}
 	
 	@Test
 	@DirtiesContext
 	public void saveAddress_test() {
 		Address expected = new Address("first Line", "2nd lIne", "3rd Line", "country", "121212");
-		Address actual = service.saveAddress(new Address("first Line", "2nd lIne", "3rd Line", "country", "121212"));
+		Address actual = service.save(new Address("first Line", "2nd lIne", "3rd Line", "country", "121212"));
 		assertEquals(expected, actual);
 	}
 
 	@Test
 	public void getAllAddresses_test() {
-		service.getAddresses()
+		service.getAll()
 		.forEach( address -> log.info("address = {} ",address));
 	}
+	
+	@Test
+	@DirtiesContext
+	public void deleteAddress_test_forNotFound() throws DataNotFoundException {
+		thrown.expect(DataNotFoundException.class);
+		service.delete(2000L);
+	}
+	
+	@Test
+	@DirtiesContext
+	public void deleteAddress_test_forFound() throws DataNotFoundException {
+		service.delete(2001L);
+	}
+	
+	
 }

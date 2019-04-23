@@ -12,14 +12,14 @@ public interface AddressService {
 	 * @return the address
 	 * @throws DataNotFoundException
 	 */
-	public Address getAddress(Long id) throws DataNotFoundException;
+	public Address get(Long id) throws DataNotFoundException;
 	
 	/**
 	 * get All the addresses
 	 * TODO: add another method which is pageable and sortable
 	 * @return the List of address objects
 	 */
-	public List<Address> getAddresses();
+	public List<Address> getAll();
 	
 	
 	/**
@@ -27,7 +27,7 @@ public interface AddressService {
 	 * @param address the address
 	 * @return the address
 	 */
-	public Address saveAddress(Address address);
+	public Address save(Address address);
 	
 	/**
 	 * creates an address and sets id passed in parameter.
@@ -37,25 +37,28 @@ public interface AddressService {
 	 * @param Id
 	 * @return
 	 */
-	public Address saveAddressById(Long Id);
+	public Address save(Long Id);
 	
 	/**
-	 * Update an existing address.
+	 * Update an existing address only.
 	 * 
 	 * @param address the address object
 	 * @return the updated address
+	 * @throws DataNotFoundException
 	 */
-	public Address updateAddress(Address address);
+	public Address update(Address address) throws DataNotFoundException;
 	
 	/**
 	 * deletes the address
 	 * @param address the address object
+	 * @throws DataNotFoundException
 	 */
-	public void deleteAddress(Address address);
+	public void delete(Address address) throws DataNotFoundException;
 	
 	/**
 	 * deletes the address 
 	 * @param id the id of the address
+	 * @throws DataNotFoundException
 	 */
-	public void deleteAddressById(Long id);
+	public void delete(Long id) throws DataNotFoundException;
 }

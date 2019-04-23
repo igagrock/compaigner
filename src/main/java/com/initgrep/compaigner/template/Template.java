@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -13,6 +14,7 @@ import com.initgrep.compaigner.audit.Auditable;
 import com.initgrep.compaigner.compaign.Compaign;
 import com.initgrep.compaigner.owner.Owner;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +29,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @Entity
-@ToString(exclude = {"compaigns"})
+@ToString(exclude = {"compaigns", "owner"})
 public class Template extends Auditable {
 
 	@Id @GeneratedValue
@@ -48,10 +50,19 @@ public class Template extends Auditable {
 	@NonNull
 	private String content;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Owner owner;
 	
 	
 	@OneToMany(mappedBy="template")
+	@Setter(AccessLevel.PRIVATE)
 	private List<Compaign> compaigns = new ArrayList<>();
+	
+	
+	public Compaign addCompaign(Compaign compaign) {
+		this.getCompaigns().add(compaign);
+		compaign.setTemplate(this);
+		return compaign;
+	}
+	
 }

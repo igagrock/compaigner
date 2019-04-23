@@ -3,6 +3,7 @@ package com.initgrep.compaigner.compaign;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -13,6 +14,7 @@ import com.initgrep.compaigner.org.Organisation;
 import com.initgrep.compaigner.subscriber.Subscriber;
 import com.initgrep.compaigner.template.Template;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,11 +50,21 @@ public class Compaign extends Auditable{
 	@ManyToOne
 	private Template template;
 		
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Organisation org; 
 	
+	/** one way manytomany relationship
+	 * the Subscriber has no idea about the compaign it has been added
+	 */
 	@ManyToMany
+	@Setter(AccessLevel.PRIVATE)
 	private List<Subscriber> recepients;
+	
+	public void addRecepients(Subscriber subscriber) {
+		this.getRecepients().add(subscriber);
+	}
+	
+	
 	
 
 }

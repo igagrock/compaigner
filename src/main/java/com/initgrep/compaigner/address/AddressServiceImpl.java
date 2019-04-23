@@ -19,44 +19,48 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public Address getAddress(Long id) throws DataNotFoundException {
+	public Address get(Long id) throws DataNotFoundException {
 		return repository.findById(id)
 				.orElseThrow(() -> new DataNotFoundException("Address was not found for id = " + id));
 
 	}
 
 	@Override
-	public List<Address> getAddresses() {
+	public List<Address> getAll() {
 		return repository.findAll();
 	}
 
 	@Override
-	public Address saveAddress(Address address) {
+	public Address save(Address address) {
 		return repository.save(address);
 	}
 
 	@Override
-	public Address saveAddressById(Long id) {
+	public Address save(Long id) {
 		Address address = new Address();
 		address.setId(id);
 		return repository.save(address);
 	}
 
 	@Override
-	public Address updateAddress(Address address) {
+	public Address update(Address address) throws DataNotFoundException {
+		this.get(address.getId());
 		return repository.save(address);
+		
 	}
 
 	@Override
-	public void deleteAddress(Address address) {
+	public void delete(Address address) throws DataNotFoundException {
+		this.get(address.getId());
 		repository.delete(address);
 
 	}
 
 	@Override
-	public void deleteAddressById(Long id) {
+	public void delete(Long id) throws DataNotFoundException {
+		this.get(id);
 		repository.deleteById(id);
-
+		
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -28,7 +29,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @Entity
-@ToString(exclude = {"subscribers" , "compaigns"})
+@ToString(exclude = {"subscribers" , "compaigns", "owner"})
 public class Organisation extends Auditable {
 	
 	@Id @GeneratedValue
@@ -40,7 +41,7 @@ public class Organisation extends Auditable {
 	@NonNull
 	private String url;
 	
-	@ManyToOne
+	@ManyToOne(fetch= FetchType.LAZY)
 	private Owner owner;
 	
 	@OneToMany(mappedBy ="org")

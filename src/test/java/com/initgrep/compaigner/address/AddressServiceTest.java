@@ -39,30 +39,18 @@ public class AddressServiceTest {
 	}
 	
 	@Test
-	@DirtiesContext
-	public void saveAddress_test() {
-		Address expected = new Address("first Line", "2nd lIne", "3rd Line", "country", "121212");
-		Address actual = service.save(new Address("first Line", "2nd lIne", "3rd Line", "country", "121212"));
-		assertEquals(expected, actual);
+	public void getAll_testCount_positive() {
+		int expectedCount = 4;
+		int actualCount =  service.getAll().size();
+		assertEquals(expectedCount, actualCount);
+		
 	}
-
-	@Test
-	public void getAllAddresses_test() {
-		service.getAll()
-		.forEach( address -> log.info("address = {} ",address));
-	}
-	
 	@Test
 	@DirtiesContext
-	public void deleteAddress_test_forNotFound() throws DataNotFoundException {
-		thrown.expect(DataNotFoundException.class);
-		service.delete(2000L);
-	}
-	
-	@Test
-	@DirtiesContext
-	public void deleteAddress_test_forFound() throws DataNotFoundException {
-		service.delete(2001L);
+	public void save_test() {
+		 Address expected = new Address("444", "some lane", "Texas", "TDA", "12345");
+		 Address actual = service.save(expected);
+		 assertEquals(expected, actual);
 	}
 	
 	

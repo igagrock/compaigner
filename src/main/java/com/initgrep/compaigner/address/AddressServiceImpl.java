@@ -36,17 +36,10 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public Address save(Long id) {
-		Address address = new Address();
-		address.setId(id);
-		return repository.save(address);
-	}
-
-	@Override
 	public Address update(Address address) throws DataNotFoundException {
 		this.get(address.getId());
 		return repository.save(address);
-		
+
 	}
 
 	@Override
@@ -57,10 +50,10 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public void delete(Long id) throws DataNotFoundException {
+	public void deleteById(Long id) throws DataNotFoundException {
 		this.get(id);
 		repository.deleteById(id);
-		
+
 	}
 
 }

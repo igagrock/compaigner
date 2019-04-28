@@ -2,11 +2,14 @@ package com.initgrep.compaigner.owner;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.initgrep.compaigner.exception.DataNotFoundException;
 
 @Service
+@Transactional
 public class OwnerServiceImpl implements OwnerService {
 
 	private OwnerRepository repository;

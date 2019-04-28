@@ -27,7 +27,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper=false , exclude = { "addresses", "orgs" , "templates"})
 @Entity
 @ToString(exclude = { "addresses", "orgs" , "templates"})
 public class Owner extends Auditable{
@@ -43,13 +43,6 @@ public class Owner extends Auditable{
 	@NonNull
 	private String email;
 	
-//	private Set<Org>
-	/***
-	 * TODO: add the address and payment information for the user here
-	 * after implementing the payment gateway and address class
-	 * @Note: address class would be @embedded class;
-	 * 
-	 */
 	
 	@Setter(AccessLevel.PRIVATE)
 	@OneToMany(mappedBy="owner")

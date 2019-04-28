@@ -27,44 +27,43 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode(callSuper=false)
-@ToString(exclude = {"recepients"})
+@EqualsAndHashCode(callSuper = false, exclude = { "recepients", "org", "template" })
+@ToString(exclude = { "recepients", "org" , "template" })
 @Entity
-public class Compaign extends Auditable{
-	
-	@Id @GeneratedValue
+public class Compaign extends Auditable {
+
+	@Id
+	@GeneratedValue
 	private Long id;
-	
+
 	@NonNull
 	private String title;
-	
+
 	@NonNull
 	private String description;
-	
+
 	@NonNull
 	private String senderEmail;
-	
+
 	@NonNull
 	private Boolean isActive;
-	
+
 	@ManyToOne
 	private Template template;
-		
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Organisation org; 
-	
-	/** one way manytomany relationship
-	 * the Subscriber has no idea about the compaign it has been added
+	private Organisation org;
+
+	/**
+	 * one way manytomany relationship the Subscriber has no idea about the compaign
+	 * it has been added
 	 */
 	@ManyToMany
 	@Setter(AccessLevel.PRIVATE)
 	private List<Subscriber> recepients;
-	
+
 	public void addRecepients(Subscriber subscriber) {
 		this.getRecepients().add(subscriber);
 	}
-	
-	
-	
 
 }

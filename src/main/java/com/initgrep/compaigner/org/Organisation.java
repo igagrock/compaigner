@@ -27,28 +27,28 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false, exclude = { "subscribers", "compaigns", "owner" })
 @Entity
-@ToString(exclude = {"subscribers" , "compaigns", "owner"})
+@ToString(exclude = { "subscribers", "compaigns", "owner" })
 public class Organisation extends Auditable {
-	
-	@Id @GeneratedValue
+
+	@Id
+	@GeneratedValue
 	private Long id;
-	
+
 	@NonNull
 	private String title;
-	
+
 	@NonNull
 	private String url;
-	
-	@ManyToOne(fetch= FetchType.LAZY)
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Owner owner;
-	
-	@OneToMany(mappedBy ="org")
+
+	@OneToMany(mappedBy = "org")
 	private List<Subscriber> subscribers = new ArrayList<>();
-	
-	@OneToMany(mappedBy ="org")
+
+	@OneToMany(mappedBy = "org")
 	private List<Compaign> compaigns = new ArrayList<>();
-	
 
 }

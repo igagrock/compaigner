@@ -27,7 +27,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper=false ,  exclude = {"compaigns", "owner"})
 @Entity
 @ToString(exclude = {"compaigns", "owner"})
 public class Template extends Auditable {

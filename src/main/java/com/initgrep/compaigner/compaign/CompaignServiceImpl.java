@@ -2,10 +2,15 @@ package com.initgrep.compaigner.compaign;
 
 import java.util.List;
 
-import com.initgrep.compaigner.common.CommonCrudService;
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
 import com.initgrep.compaigner.exception.DataNotFoundException;
 
-public class CompaignServiceImpl implements CommonCrudService<Compaign, Long, DataNotFoundException> {
+@Service
+@Transactional
+public class CompaignServiceImpl implements CompaignService {
 
 	private CompaignRepository repository;
 	

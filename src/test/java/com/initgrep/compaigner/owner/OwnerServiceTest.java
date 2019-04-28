@@ -1,4 +1,4 @@
-package com.initgrep.compaigner.address;
+package com.initgrep.compaigner.owner;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,36 +17,37 @@ import com.initgrep.compaigner.exception.DataNotFoundException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AddressServiceTest {
+public class OwnerServiceTest {
 	
-	Logger log = LoggerFactory.getLogger(AddressServiceTest.class);
+	Logger log = LoggerFactory.getLogger(OwnerServiceTest.class);
 	
 	@Autowired
-	AddressService service;
+	OwnerService service;
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
+
 	
 	
 	@Test(expected = DataNotFoundException.class)
-	public void getAddressById_test() throws DataNotFoundException {
-		log.info("getAddressById_test START ");
+	public void get_test() throws DataNotFoundException {
+		log.info("get_test START ");
 		service.get(1000L);
-		log.info("getAddressById_test END");
+		log.info("get_test END");
 	}
 	
 	@Test
-	public void getAddressById_test1() throws DataNotFoundException {
-		log.info("getAddressById_test1 START");
+	public void get_negative() throws DataNotFoundException {
+		log.info("get_negative START");
 		thrown.expect(DataNotFoundException.class);
 		service.get(1000L);
-		log.info("getAddressById_test1 END");
+		log.info("get_negative END");
 	}
 	
 	@Test
 	public void getAll_testCount_positive() {
 		log.info("getAll_testCount_positive START");
-		int expectedCount = 4;
+		int expectedCount = 2;
 		int actualCount =  service.getAll().size();
 		assertEquals(expectedCount, actualCount);
 		log.info("getAll_testCount_positive END");
@@ -57,8 +58,8 @@ public class AddressServiceTest {
 	@DirtiesContext
 	public void save_test() {
 		 log.info("save_test START");
-		 Address expected = new Address("444", "some lane", "Texas", "TDA", "12345");
-		 Address actual = service.save(expected);
+		 Owner expected = new Owner("irs", "jay@email.com");
+		 Owner actual = service.save(expected);
 		 assertEquals(expected, actual);
 		 log.info("save_test END");
 	}
@@ -67,10 +68,10 @@ public class AddressServiceTest {
 	@DirtiesContext
 	public void update_test_negative() throws DataNotFoundException {
 		log.info("update_test_negative START");
-		Address address = new Address("444", "some lane", "Texas", "TDA", "12345");
-		address.setId(123444L);
+		Owner expected = new Owner("irs", "jay@email.com");
+		expected.setId(123444L);
 		thrown.expect(DataNotFoundException.class);
-		service.update(address);
+		service.update(expected);
 		log.info("update_test_negative END");
 	}
 	
@@ -79,11 +80,14 @@ public class AddressServiceTest {
 	@DirtiesContext
 	public void update_test_positive() throws DataNotFoundException {
 		log.info("update_test_positive START");
-		Address address = new Address("444", "some lane", "Texas", "TDA", "12345");
-		Address expected = service.save(address);
-		expected.setCity("oudor");
-		Address actual = service.update(address);
-		assertEquals(expected, actual);
+		Owner owner = new Owner("dj", "dj@gmail.com");
+		Owner actual = service.save(owner);
+		
+		actual.setEmail("coll@gmail.com");
+	
+		Owner expected = service.save(actual);
+		
+		assertEquals(actual.getEmail(),expected.getEmail());
 		log.info("update_test_positive END");
 		
 	}
@@ -92,10 +96,10 @@ public class AddressServiceTest {
 	@DirtiesContext
 	public void delete_test_negative() throws DataNotFoundException {
 		log.info("delete_test_negative START");
-		Address address = new Address("444", "some lane", "Texas", "TDA", "12345");
-		address.setId(123444L);
+		Owner owner = new Owner("irs", "jay@email.com");
+		owner.setId(123444L);
 		thrown.expect(DataNotFoundException.class);
-		service.delete(address);
+		service.delete(owner);
 		log.info("delete_test_negative END");
 	}
 	
@@ -103,9 +107,9 @@ public class AddressServiceTest {
 	@DirtiesContext
 	public void delete_test_postive() throws DataNotFoundException {
 		log.info("delete_test_postive START");
-		Address address = new Address();
-		address.setId(2001L);
-		service.delete(address);
+		Owner owner = new Owner();
+		owner.setId(2001L);
+		service.delete(owner);
 		log.info("delete_test_postive END");
 	}
 	
@@ -113,10 +117,10 @@ public class AddressServiceTest {
 	@DirtiesContext
 	public void deleteById_test_negative() throws DataNotFoundException {
 		log.info("deleteById_test_negative START");
-		Address address = new Address("444", "some lane", "Texas", "TDA", "12345");
-		address.setId(123444L);
+		Owner owner = new Owner("irs", "jay@email.com");
+		owner.setId(123444L);
 		thrown.expect(DataNotFoundException.class);
-		service.deleteById(address.getId());
+		service.deleteById(owner.getId());
 		log.info("deleteById_test_negative END");
 	}
 	
@@ -124,9 +128,9 @@ public class AddressServiceTest {
 	@DirtiesContext
 	public void deleteById_test_postive() throws DataNotFoundException {
 		log.info("deleteById_test_postive START");
-		Address address = new Address();
-		address.setId(2001L);
-		service.deleteById(address.getId());
+		Owner owner = new Owner("dsksd","sdksds@gmai.com");
+		service.save(owner);
+		service.deleteById(owner.getId());
 		log.info("deleteById_test_postive END");
 	}
 	

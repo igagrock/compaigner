@@ -2,11 +2,21 @@ package com.initgrep.compaigner.subscriber;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
 import com.initgrep.compaigner.exception.DataNotFoundException;
 
+@Service
+@Transactional
 public class SubscriberServiceImpl implements SubscriberService {
 
 	private SubscriberRepository repository;
+
+	public SubscriberServiceImpl(SubscriberRepository repository) {
+		this.repository = repository;
+	}
 
 	@Override
 	public Subscriber get(Long id) throws DataNotFoundException {

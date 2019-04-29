@@ -3,11 +3,14 @@ package com.initgrep.compaigner.owner;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.initgrep.compaigner.address.Address;
 import com.initgrep.compaigner.audit.Auditable;
 import com.initgrep.compaigner.org.Organisation;
@@ -41,24 +44,24 @@ public class Owner extends Auditable{
 	private String name;
 	
 	@NonNull
+	@Column(unique = true)
 	private String email;
 	
-	
+	@JsonIgnore
 	@Setter(AccessLevel.PRIVATE)
-	@OneToMany(mappedBy="owner")
+	@OneToMany(mappedBy="owner", cascade= CascadeType.REMOVE)
 	private List<Address> addresses = new ArrayList<>();
 	
+	@JsonIgnore
 	@Setter(AccessLevel.PRIVATE)
-	@OneToMany(mappedBy="owner")
+	@OneToMany(mappedBy="owner" ,  cascade= CascadeType.REMOVE)
 	private List<Organisation> orgs = new ArrayList<>();
 	
-	@Setter(AccessLevel.PRIVATE)
-	@OneToMany(mappedBy="owner")
+	@JsonIgnore
+	@OneToMany(mappedBy="owner" )
 	private List<Template> templates = new ArrayList<>();
 
-	/** Add the address to the owner 
-	 *  Note: Still need to save the address in services
-	 * **/
+	
 	public Address addAddress(Address address){
 		this.getAddresses().add(address);
 		address.setOwner(this);

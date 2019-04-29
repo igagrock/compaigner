@@ -7,15 +7,19 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.initgrep.compaigner.exception.DataNotFoundException;
+import com.initgrep.compaigner.owner.Owner;
+import com.initgrep.compaigner.owner.OwnerService;
 
 @Service
 @Transactional
 public class AddressServiceImpl implements AddressService {
 
 	private AddressRepository repository;
+	private OwnerService ownerService;
 
-	public AddressServiceImpl(AddressRepository repository) {
+	public AddressServiceImpl(AddressRepository repository, OwnerService ownerService) {
 		this.repository = repository;
+		this.ownerService = ownerService;
 	}
 
 	@Override
@@ -31,9 +35,39 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
+	public List<Address> getAllByOwnerId(Long ownerId) throws DataNotFoundException {
+		ownerService.get(ownerId);
+		return repository.findAllByOwnerId(ownerId);
+	}
+
+	@Override
+	public List<Address> getAllByOwnerEmail(String email) throws DataNotFoundException {
+		ownerService.get(email);
+		return repository.findAllByOwnerEmail(email);
+	}
+
+	@Override
+	public Address getByIdAndOwnerEmail(Long id, String email) throws DataNotFoundException {
+		ownerService.get(email);
+		this.get(id);
+		return repository.findByIdAndOwnerEmail(id, email)
+				.orElseThrow(() -> 
+				new DataNotFoundException("Address was not found for user = "+email + " and address = "+id ));
+		
+	}
+
+	@Override
 	public Address save(Address address) {
 		return repository.save(address);
 	}
+	
+	@Override
+	public Address saveByOwnerEmail(String email , Address address) throws DataNotFoundException {
+		Owner owner = ownerService.get(email);
+		address.setOwner(owner);
+		return this.save(address);
+	}
+	
 
 	@Override
 	public Address update(Address address) throws DataNotFoundException {

@@ -9,18 +9,22 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @MappedSuperclass
 public abstract class Auditable {
 
     @CreatedBy
     private String createdBy;
 
+	@JsonIgnore
     @CreatedDate
     private LocalDateTime creationDate;
 
     @LastModifiedBy
     private String lastModifiedBy;
 
+	@JsonIgnore
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 

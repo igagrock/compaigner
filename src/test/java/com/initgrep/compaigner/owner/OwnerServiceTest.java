@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.initgrep.compaigner.address.Address;
+import com.initgrep.compaigner.address.AddressService;
 import com.initgrep.compaigner.exception.DataNotFoundException;
 
 @RunWith(SpringRunner.class)
@@ -23,6 +25,9 @@ public class OwnerServiceTest {
 	
 	@Autowired
 	OwnerService service;
+	
+	@Autowired
+	AddressService addressService;
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
@@ -107,9 +112,9 @@ public class OwnerServiceTest {
 	@DirtiesContext
 	public void delete_test_postive() throws DataNotFoundException {
 		log.info("delete_test_postive START");
-		Owner owner = new Owner();
-		owner.setId(2001L);
-		service.delete(owner);
+		Owner owner = new Owner("ksdksdk", "ksdkkjsd@gmail.com");
+		Owner save = service.save(owner);
+		service.delete(save);
 		log.info("delete_test_postive END");
 	}
 	
@@ -132,6 +137,22 @@ public class OwnerServiceTest {
 		service.save(owner);
 		service.deleteById(owner.getId());
 		log.info("deleteById_test_postive END");
+	}
+	
+	
+	@Test
+	@DirtiesContext
+	public void deleteOwnerWithaddress() throws DataNotFoundException {
+		log.info("deleteOwnerWithaddress START");
+		Owner owner = new Owner("Irshad","internationl@gmail.com");
+		
+		Address address = new Address("line1", "line2", "bangalore", "india", "232323");
+		owner.addAddress(address);
+		service.save(owner);
+		addressService.save(address);
+		
+		service.delete(owner);
+		log.info("saveOwnerWithaddress END");
 	}
 	
 	

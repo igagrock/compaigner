@@ -54,6 +54,36 @@ public class AddressServiceTest {
 	}
 
 	@Test
+	public void getAllByOwnerId_test() throws DataNotFoundException {
+		log.info("getAllByOwnerId_test START");
+		int expectedCount = 2;
+		int actualCount =  service.getAllByOwnerId(1001L).size();
+		assertEquals(expectedCount, actualCount);
+		log.info("getAllByOwnerId_test END");
+		
+	}
+	
+	@Test
+	public void getAllByOwnerEmail_test() throws DataNotFoundException {
+		log.info("getAllByOwnerEmail_test START");
+		int expectedCount = 2;
+		int actualCount =  service.getAllByOwnerEmail("irshad@gmail.com").size();
+		assertEquals(expectedCount, actualCount);
+		log.info("getAllByOwnerEmail_test END");
+		
+	}
+	
+	@Test
+	public void getAddressByIdAndOwnerEmail_test() throws DataNotFoundException {
+		log.info("getAddressByIdAndOwnerEmail_test START");
+		
+		service.getByIdAndOwnerEmail(2001L, "irshad@gmail.com");
+//		assertEquals(expectedCount, actualCount);
+		log.info("getAddressByIdAndOwnerEmail_test END");
+		
+	}
+	
+	@Test
 	@DirtiesContext
 	public void save_test() {
 		 log.info("save_test START");

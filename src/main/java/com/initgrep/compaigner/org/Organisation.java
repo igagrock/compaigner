@@ -3,6 +3,7 @@ package com.initgrep.compaigner.org;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -45,10 +46,10 @@ public class Organisation extends Auditable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Owner owner;
 
-	@OneToMany(mappedBy = "org")
+	@OneToMany(mappedBy = "org", cascade = CascadeType.REMOVE)
 	private List<Subscriber> subscribers = new ArrayList<>();
 
-	@OneToMany(mappedBy = "org")
+	@OneToMany(mappedBy = "org", cascade = CascadeType.REMOVE)
 	private List<Compaign> compaigns = new ArrayList<>();
 
 }

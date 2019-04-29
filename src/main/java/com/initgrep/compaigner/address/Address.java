@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.initgrep.compaigner.audit.Auditable;
 import com.initgrep.compaigner.owner.Owner;
 
@@ -48,6 +49,7 @@ public class Address extends Auditable{
 	@NonNull
 	private String ZipCode;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Owner owner;
 	

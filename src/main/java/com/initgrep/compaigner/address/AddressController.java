@@ -4,8 +4,12 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,13 +47,36 @@ public class AddressController {
 		}
 	}
 	
-	/** update Delete method 
-	 * Logic:
-	 * fetch the Owners address
-	 * if the Owner has the same address
-	 * update/delete the address
-	 * else exception
-	 */
+	@PostMapping
+	public Address saveAddress(@PathVariable("email") String email, @RequestBody Address address) {
+		try {
+			return service.saveOwnerAddress(email, address);
+		} catch (DataNotFoundException e) {
+			log.debug("exception thrown with message : {} ",e.getMessage());
+			throw new NotFoundException(e.getMessage());
+		}
+	}
+	
+	@PutMapping
+	public Address updateAddress(@PathVariable("email") String email, @RequestBody Address address) {
+		try {
+			return service.updateOwnerAddress(email, address);
+		} catch (DataNotFoundException e) {
+			log.debug("exception thrown with message : {} ",e.getMessage());
+			throw new NotFoundException(e.getMessage());
+		}
+	}
+	
+	@DeleteMapping("/{id}")
+	public void deleteAddress(@PathVariable("email") String email, @PathVariable("id") Long id ) {
+		try {
+			 service.deleteOwnerAddress(email, id);
+		} catch (DataNotFoundException e) {
+			log.debug("exception thrown with message : {} ",e.getMessage());
+			throw new NotFoundException(e.getMessage());
+		}
+	}
+
 	
 	
 }

@@ -48,11 +48,9 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public Address getByIdAndOwnerEmail(Long id, String email) throws DataNotFoundException {
-		ownerService.get(email);
-		this.get(id);
 		return repository.findByIdAndOwnerEmail(id, email)
 				.orElseThrow(() -> 
-				new DataNotFoundException("Address was not found for user = "+email + " and address = "+id ));
+				new DataNotFoundException("Address was not found for user = "+email + " with address id = "+id ));
 		
 	}
 
@@ -62,9 +60,10 @@ public class AddressServiceImpl implements AddressService {
 	}
 	
 	@Override
-	public Address saveByOwnerEmail(String email , Address address) throws DataNotFoundException {
+	public Address saveOwnerAddress(String email , Address address) throws DataNotFoundException {
 		Owner owner = ownerService.get(email);
 		address.setOwner(owner);
+		owner.addAddress(address);
 		return this.save(address);
 	}
 	
@@ -74,6 +73,12 @@ public class AddressServiceImpl implements AddressService {
 		this.get(address.getId());
 		return repository.save(address);
 
+	}
+	
+	@Override
+	public Address updateOwnerAddress(String email, Address address) throws DataNotFoundException {
+		this.getByIdAndOwnerEmail(address.getId(), email);
+		return this.saveOwnerAddress(email, address);
 	}
 
 	@Override
@@ -89,5 +94,14 @@ public class AddressServiceImpl implements AddressService {
 		repository.deleteById(id);
 
 	}
+
+	@Override
+	public void deleteOwnerAddress(String email, Long id) throws DataNotFoundException {
+		this.getByIdAndOwnerEmail(id, email);
+		this.deleteById(id);
+	}
+
+	
+
 
 }
